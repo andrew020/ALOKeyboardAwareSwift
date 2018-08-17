@@ -88,11 +88,13 @@ extension UIScrollView {
             return
         }
         
-        let currentFirstResponder = UIResponder.alo_currentFirstResponder()
-        let moveResponder = alo_autoScrollFirstResponder && (currentFirstResponder != nil)
+        var moveResponder = false
         var rectOfFirstResponderInScrollView = CGRect.zero
-        if moveResponder == true {
-            rectOfFirstResponderInScrollView = currentFirstResponder!.convert(currentFirstResponder!.bounds, to: window)
+        if let currentFirstResponder = UIResponder.alo_currentFirstResponder() as? UIView {
+            moveResponder = alo_autoScrollFirstResponder
+            if moveResponder == true {
+                rectOfFirstResponderInScrollView = currentFirstResponder.convert(currentFirstResponder.bounds, to: window)
+            }
         }
         UIView.animate(withDuration: timeInterval) { [weak self] in
             self?.contentInset = newContentInset
