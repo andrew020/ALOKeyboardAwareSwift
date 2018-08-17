@@ -10,7 +10,7 @@ import UIKit
 import Foundation
 
 extension UIScrollView {
-    var alo_autoResizeContent: Bool {
+    public var alo_autoResizeContent: Bool {
         set {
             if newValue == alo_autoResizeContent {
                 return
@@ -30,7 +30,7 @@ extension UIScrollView {
         }
     }
     
-    var alo_autoScrollFirstResponder: Bool {
+    public var alo_autoScrollFirstResponder: Bool {
         set {
             objc_setAssociatedObject(self, alo_safeKey("kAOLKeyboardAwareAutoScrollFirstResponder"), newValue, .OBJC_ASSOCIATION_COPY_NONATOMIC)
         }
