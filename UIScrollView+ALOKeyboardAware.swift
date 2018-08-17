@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 
 extension UIScrollView {
     var alo_autoResizeContent: Bool {
@@ -15,50 +16,48 @@ extension UIScrollView {
                 return
             }
             if newValue == true {
-                addNotification()
+                alo_addNotification()
                 alo_autoScrollFirstResponder = false
             }
             else {
-                removeNotification()
+                alo_removeNotification()
                 alo_autoScrollFirstResponder = false
             }
-            objc_setAssociatedObject(self, safeKey("kAOLKeyboardAwareAutoResizeContent"), newValue, .OBJC_ASSOCIATION_COPY_NONATOMIC)
+            objc_setAssociatedObject(self, alo_safeKey("kAOLKeyboardAwareAutoResizeContent"), newValue, .OBJC_ASSOCIATION_COPY_NONATOMIC)
         }
         get {
-            return objc_getAssociatedObject(self, safeKey("kAOLKeyboardAwareAutoResizeContent")) as? Bool ?? false
+            return objc_getAssociatedObject(self, alo_safeKey("kAOLKeyboardAwareAutoResizeContent")) as? Bool ?? false
         }
     }
     
     var alo_autoScrollFirstResponder: Bool {
         set {
-            objc_setAssociatedObject(self, "kAOLKeyboardAwareAutoScrollFirstResponder", newValue, .OBJC_ASSOCIATION_COPY_NONATOMIC)
+            objc_setAssociatedObject(self, alo_safeKey("kAOLKeyboardAwareAutoScrollFirstResponder"), newValue, .OBJC_ASSOCIATION_COPY_NONATOMIC)
         }
         get {
-            return objc_getAssociatedObject(self, safeKey("kAOLKeyboardAwareAutoScrollFirstResponder")) as? Bool ?? false
+            return objc_getAssociatedObject(self, alo_safeKey("kAOLKeyboardAwareAutoScrollFirstResponder")) as? Bool ?? false
         }
     }
     
-    private func safeKey(_ key: String!) -> UnsafeRawPointer! {
-        return UnsafeRawPointer.init(bitPattern: key.hashValue)
-    }
-}
-
-extension UIScrollView {
     private var alo_initialContentInset: NSValue? {
         set {
-            objc_setAssociatedObject(self, safeKey("kAOLKeyboardAwareInitialContentInset"), newValue, .OBJC_ASSOCIATION_COPY_NONATOMIC)
+            objc_setAssociatedObject(self, alo_safeKey("kAOLKeyboardAwareInitialContentInset"), newValue, .OBJC_ASSOCIATION_COPY_NONATOMIC)
         }
         get {
-            return objc_getAssociatedObject(self, safeKey("kAOLKeyboardAwareInitialContentInset")) as? NSValue
+            return objc_getAssociatedObject(self, alo_safeKey("kAOLKeyboardAwareInitialContentInset")) as? NSValue
         }
     }
     
-    private func addNotification() -> Void {
+    private func alo_safeKey(_ key: String!) -> UnsafeRawPointer! {
+        return UnsafeRawPointer.init(bitPattern: key.hashValue)
+    }
+    
+    private func alo_addNotification() -> Void {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: .UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: .UIKeyboardWillHide, object: nil)
     }
     
-    private func removeNotification() -> Void {
+    private func alo_removeNotification() -> Void {
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil);
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil);
     }
