@@ -8,18 +8,18 @@
 
 import UIKit
 
-weak var alo_currentFirstResponderObject: AnyObject?;
-
 extension UIResponder {
-    class func alo_currentFirstResponder() -> AnyObject? {
-        alo_currentFirstResponderObject = nil;
+    static weak var alo_currentFirstResponderObject: AnyObject?;
+    
+    class func alo_currentFirstResponder() -> UIView? {
+        UIResponder.alo_currentFirstResponderObject = nil;
         // 通过将target设置为nil，让系统自动遍历响应链
         // 从而响应链当前第一响应者响应我们自定义的方法
         UIApplication.shared.sendAction(#selector(alo_findFirstResponder(sender:)), to: nil, from: nil, for: nil);
-        return alo_currentFirstResponderObject;
+        return UIResponder.alo_currentFirstResponderObject as? UIView;
     }
     
     @objc private func alo_findFirstResponder(sender: AnyObject?) -> Void {
-        alo_currentFirstResponderObject = self;
+        UIResponder.alo_currentFirstResponderObject = self;
     }
 }

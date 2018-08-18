@@ -90,7 +90,7 @@ extension UIScrollView {
         
         var moveResponder = false
         var rectOfFirstResponderInScrollView = CGRect.zero
-        if let currentFirstResponder = UIResponder.alo_currentFirstResponder() as? UIView {
+        if let currentFirstResponder = UIResponder.alo_currentFirstResponder() {
             moveResponder = alo_autoScrollFirstResponder
             if moveResponder == true {
                 rectOfFirstResponderInScrollView = currentFirstResponder.convert(currentFirstResponder.bounds, to: window)
