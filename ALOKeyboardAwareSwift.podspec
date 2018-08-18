@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "ALOKeyboardAwareSwift"
-  s.version      = "1.3.0"
+  s.version      = "v1.3.0"
   s.summary      = "自适应键盘的 UIScrollView"
   s.homepage     = "https://github.com/andrew020/ALOKeyboardAwareSwift"
   s.license      = { :type => "MIT", :file => "LICENSE" }
